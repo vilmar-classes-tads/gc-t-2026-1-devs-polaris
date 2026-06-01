@@ -14,6 +14,11 @@ public class ServidorService {
             throw new RuntimeException("CPF já cadastrado.");
         }
 
+        //validação de Email
+        if (ServidorRepository.buscarPorEmail(servidor.getEmail()) != null){
+            throw new RuntimeException("email já cadastrado.");
+        }
+
         ServidorRepository.criarServidor(servidor);
     }
 }
