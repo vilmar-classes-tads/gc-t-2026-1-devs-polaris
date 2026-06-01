@@ -32,8 +32,12 @@ public class CadastroServidorMenu {
         System.out.print("Area de Formacao: ");
         servidor.setAreaFormacao(scanner.nextLine());
 
-        ServidorController.cadastrarServidor(servidor);
+        try {
+            ServidorController.cadastrarServidor(servidor);
+            System.out.println("Servidor cadastrado com sucesso!");
 
-        System.out.println("\nServidor cadastrado com sucesso!");
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
