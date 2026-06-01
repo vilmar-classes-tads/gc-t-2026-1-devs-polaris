@@ -7,11 +7,11 @@ import java.util.List;
 
 public class ServidorRepository {
 
-    public static final List<Servidor> servidores = new ArrayList<>();
+    private static final List<Servidor> servidores = new ArrayList<>();
 
     private ServidorRepository(){}
 
-    public static void CriarServidor(Servidor servidor){
+    public static void criarServidor(Servidor servidor){
         servidores.add(servidor);
     }
 
@@ -42,6 +42,7 @@ public class ServidorRepository {
                 servidorAux.setNome(servidor.getNome());
                 servidorAux.setNomeSocial(servidor.getNomeSocial());
                 servidorAux.setEmail(servidor.getEmail());
+                servidorAux.setSenhaHash(servidor.getSenhaHash());
                 servidorAux.setTelefone(servidor.getTelefone());
                 servidorAux.setCampus(servidor.getCampus());
                 servidorAux.setAreaFormacao(servidor.getAreaFormacao());
@@ -61,8 +62,8 @@ public class ServidorRepository {
     }
 
 
-    public static List<Servidor> ListarTodos(){
-        return servidores;
+    public static List<Servidor> listarTodos(){
+        return new ArrayList<>(servidores); //retornando uma cópia da lista atual de servidores
     }
 
 }
