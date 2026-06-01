@@ -8,6 +8,12 @@ public class ServidorController {
     private ServidorController(){}
 
     public static void cadastrarServidor(Servidor servidor){
-        ServidorService.cadastrarServidor(servidor);
+
+        try {
+            ServidorService.cadastrarServidor(servidor);
+            System.out.println("Servidor foi cadastrado com sucesso!");
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
     }
 }
