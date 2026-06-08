@@ -1,0 +1,16 @@
+C:\Education\TADS_IFPE\4_2026.1\0_Testes\gc-t-2026-1-devs-polaris.git\src\main\java\br\ifpe\proext\controller\package-info.java
+C:\Education\TADS_IFPE\4_2026.1\0_Testes\gc-t-2026-1-devs-polaris.git\src\main\java\br\ifpe\proext\controller\ServidorController.java
+C:\Education\TADS_IFPE\4_2026.1\0_Testes\gc-t-2026-1-devs-polaris.git\src\main\java\br\ifpe\proext\enums\package-info.java
+C:\Education\TADS_IFPE\4_2026.1\0_Testes\gc-t-2026-1-devs-polaris.git\src\main\java\br\ifpe\proext\enums\Perfil.java
+C:\Education\TADS_IFPE\4_2026.1\0_Testes\gc-t-2026-1-devs-polaris.git\src\main\java\br\ifpe\proext\enums\Sexo.java
+C:\Education\TADS_IFPE\4_2026.1\0_Testes\gc-t-2026-1-devs-polaris.git\src\main\java\br\ifpe\proext\enums\Titulacao.java
+C:\Education\TADS_IFPE\4_2026.1\0_Testes\gc-t-2026-1-devs-polaris.git\src\main\java\br\ifpe\proext\exception\CpfJaCadastradoException.java
+C:\Education\TADS_IFPE\4_2026.1\0_Testes\gc-t-2026-1-devs-polaris.git\src\main\java\br\ifpe\proext\exception\EmailJaCadastradoException.java
+C:\Education\TADS_IFPE\4_2026.1\0_Testes\gc-t-2026-1-devs-polaris.git\src\main\java\br\ifpe\proext\exception\package-info.java
+C:\Education\TADS_IFPE\4_2026.1\0_Testes\gc-t-2026-1-devs-polaris.git\src\main\java\br\ifpe\proext\exception\SenhaInvalidaException.java
+C:\Education\TADS_IFPE\4_2026.1\0_Testes\gc-t-2026-1-devs-polaris.git\src\main\java\br\ifpe\proext\model\package-info.java
+C:\Education\TADS_IFPE\4_2026.1\0_Testes\gc-t-2026-1-devs-polaris.git\src\main\java\br\ifpe\proext\model\Servidor.java
+C:\Education\TADS_IFPE\4_2026.1\0_Testes\gc-t-2026-1-devs-polaris.git\src\main\java\br\ifpe\proext\repository\package-info.java
+C:\Education\TADS_IFPE\4_2026.1\0_Testes\gc-t-2026-1-devs-polaris.git\src\main\java\br\ifpe\proext\repository\ServidorRepository.java
+C:\Education\TADS_IFPE\4_2026.1\0_Testes\gc-t-2026-1-devs-polaris.git\src\main\java\br\ifpe\proext\service\package-info.java
+C:\Education\TADS_IFPE\4_2026.1\0_Testes\gc-t-2026-1-devs-polaris.git\src\main\java\br\ifpe\proext\service\ServidorService.java
