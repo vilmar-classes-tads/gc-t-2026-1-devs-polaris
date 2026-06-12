@@ -5,6 +5,8 @@ import br.ifpe.proext.model.Servidor;
 import br.ifpe.proext.service.EditalService;
 import br.ifpe.proext.service.ServidorService;
 
+import java.util.List;
+
 public class EditalController {
 
     private EditalController(){}
@@ -21,6 +23,11 @@ public class EditalController {
     public static void editarEdital(Edital edital) {
 
         EditalService.editarEdital(edital);
+
+    }
+    public static List<Edital> listarEditais() {
+
+        return EditalService.listarEditais();
 
     }
 }

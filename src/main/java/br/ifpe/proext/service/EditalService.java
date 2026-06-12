@@ -4,6 +4,7 @@ package br.ifpe.proext.service;
 import br.ifpe.proext.model.Edital;
 import br.ifpe.proext.repository.EditalRepository;
 
+import java.util.List;
 import java.time.LocalDate;
 
 
@@ -40,4 +41,11 @@ public class EditalService {
 
         EditalRepository.atualizarEdital(editalAtualizado);
     }
+
+    public static List<Edital> listarEditais() {
+
+        return EditalRepository.listarTodos();
+
+    }
+
     }
