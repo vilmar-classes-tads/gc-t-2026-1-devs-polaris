@@ -55,7 +55,8 @@ public class EditalRepository {
             if (editalAux.getNumero().equals(edital.getNumero())) {
 
                 editalAux.setTitulo(edital.getTitulo());
-                editalAux.setFimSumbissao(edital.getFimSumbissao());
+
+                editalAux.setFimSubmissao(edital.getFimSubmissao());
                 editalAux.setInicioAvaliacao(edital.getInicioAvaliacao());
                 editalAux.setFimAvaliacao(edital.getFimAvaliacao());
 

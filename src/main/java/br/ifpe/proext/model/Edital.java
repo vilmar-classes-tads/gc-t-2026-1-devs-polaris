@@ -5,8 +5,8 @@ public class Edital {
     private String titulo;
     private Long numero;
     private String data;
-    private String inicioSumbissao;
-    private String fimSumbissao;
+    private String inicioSubmissao;
+    private String fimSubmissao;
     private String inicioAvaliacao;
     private String fimAvaliacao;
 
@@ -34,20 +34,20 @@ public class Edital {
         this.data = data;
     }
 
-    public String getInicioSumbissao() {
-        return inicioSumbissao;
+    public String getInicioSubmissao() {
+        return inicioSubmissao;
     }
 
-    public void setInicioSumbissao(String inicioSumbissao) {
-        this.inicioSumbissao = inicioSumbissao;
+    public void setInicioSubmissao(String inicioSubmissao) {
+        this.inicioSubmissao = inicioSubmissao;
     }
 
-    public String getFimSumbissao() {
-        return fimSumbissao;
+    public String getFimSubmissao() {
+        return fimSubmissao;
     }
 
-    public void setFimSumbissao(String fimSumbissao) {
-        this.fimSumbissao = fimSumbissao;
+    public void setFimSubmissao(String fimSubmissao) {
+        this.fimSubmissao = fimSubmissao;
     }
 
     public String getInicioAvaliacao() {
