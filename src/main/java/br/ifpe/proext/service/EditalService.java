@@ -4,11 +4,19 @@ package br.ifpe.proext.service;
 import br.ifpe.proext.model.Edital;
 import br.ifpe.proext.repository.EditalRepository;
 
+import java.time.LocalDate;
+
 
 public class EditalService {
 
+
     private static void definirNovoEdital(Edital edital) {
 
+        edital.setNumero(
+                EditalRepository.gerarNumeroEdital());
+
+        edital.setInicioSumbissao(LocalDate.now().toString());
+        edital.setData(LocalDate.now().toString());
     }
 
     public static void cadastrarEdital(Edital edital){
@@ -20,4 +28,16 @@ public class EditalService {
 
         EditalRepository.criarEdital(edital);
     }
-}
+
+    public static void editarEdital(Edital editalAtualizado) {
+
+        Edital editalExistente =
+                EditalRepository.buscarPorNumero(editalAtualizado.getNumero());
+
+        if (editalExistente == null) {
+            throw new RuntimeException("Edital não encontrado.");
+        }
+
+        EditalRepository.atualizarEdital(editalAtualizado);
+    }
+    }

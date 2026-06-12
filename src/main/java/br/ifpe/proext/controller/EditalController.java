@@ -18,4 +18,9 @@ public class EditalController {
         }
     }
 
+    public static void editarEdital(Edital edital) {
+
+        EditalService.editarEdital(edital);
+
+    }
 }

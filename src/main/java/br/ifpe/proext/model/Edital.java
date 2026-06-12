@@ -3,7 +3,7 @@ package br.ifpe.proext.model;
 public class Edital {
 
     private String titulo;
-    private String numero;
+    private Long numero;
     private String data;
     private String inicioSumbissao;
     private String fimSumbissao;
@@ -18,11 +18,11 @@ public class Edital {
         this.titulo = titulo;
     }
 
-    public String getNumero() {
+    public Long getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero) {
+    public void setNumero(Long numero) {
         this.numero = numero;
     }
 
