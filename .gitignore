@@ -1,6 +1,6 @@
  # Compiled class file
 *.class
-Main
+/main/java/br/ifpe/proext/Main.java
 # Log file
 *.log
 
