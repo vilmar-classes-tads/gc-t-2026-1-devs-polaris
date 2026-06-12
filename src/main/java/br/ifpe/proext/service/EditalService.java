@@ -1,6 +1,7 @@
 package br.ifpe.proext.service;
 
 
+import br.ifpe.proext.exception.PeriodoAvaliacaoInvalidoException;
 import br.ifpe.proext.model.Edital;
 import br.ifpe.proext.repository.EditalRepository;
 import br.ifpe.proext.exception.PeriodoSubmissaoInvalidoException;
@@ -38,6 +39,25 @@ public class EditalService {
             throw new PeriodoSubmissaoInvalidoException();
         }
     }
+    private static void validarPeriodoAvaliacao(Edital editalExistente, Edital editalAtualizado) {
+
+
+        if (editalAtualizado.getFimAvaliacao() == null || editalExistente.getInicioAvaliacao() == null) {
+            return;
+        }
+
+        LocalDate inicio =
+                LocalDate.parse(
+                        editalExistente.getInicioAvaliacao());
+
+        LocalDate fim =
+                LocalDate.parse(
+                        editalAtualizado.getFimAvaliacao());
+
+        if (inicio.isAfter(fim)) {
+            throw new PeriodoAvaliacaoInvalidoException();
+        }
+    }
 
     public static void cadastrarEdital(Edital edital){
 
@@ -45,6 +65,9 @@ public class EditalService {
 //        validarNumero(edital.getNumero());
 
         definirNovoEdital(edital);
+
+        validarPeriodoSubmissao(edital, edital);
+        validarPeriodoAvaliacao(edital, edital);
 
         EditalRepository.criarEdital(edital);
     }
@@ -59,7 +82,20 @@ public class EditalService {
                 throw new RuntimeException("Edital não encontrado.");
             }
 
+            if (editalExistente.getInicioAvaliacao() != null) {
+
+                boolean tentouMudarInicio = !editalExistente.getInicioAvaliacao().equals(editalAtualizado.getInicioAvaliacao());
+                if (tentouMudarInicio) {
+                    throw new RuntimeException("O início do período de avaliação já foi definido e não pode ser alterado.");
+                }
+
+            }
+
             validarPeriodoSubmissao(
+                    editalExistente,
+                    editalAtualizado);
+
+            validarPeriodoAvaliacao(
                     editalExistente,
                     editalAtualizado);
 

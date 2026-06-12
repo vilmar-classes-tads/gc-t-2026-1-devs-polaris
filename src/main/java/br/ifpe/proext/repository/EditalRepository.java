@@ -55,12 +55,14 @@ public class EditalRepository {
             if (editalAux.getNumero().equals(edital.getNumero())) {
 
                 editalAux.setTitulo(edital.getTitulo());
-
+                editalAux.setInicioSubmissao(edital.getInicioSubmissao());
                 editalAux.setFimSubmissao(edital.getFimSubmissao());
+
                 editalAux.setInicioAvaliacao(edital.getInicioAvaliacao());
                 editalAux.setFimAvaliacao(edital.getFimAvaliacao());
-
                 return;
+
+
             }
         }
     }

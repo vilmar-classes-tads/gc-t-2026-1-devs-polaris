@@ -9,77 +9,45 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.println("=============================================");
-        System.out.println("🚀 INICIANDO TESTES DO SISTEMA DE EDITAIS");
+        System.out.println("🚀 TESTE: TENTATIVA DE AJUSTAR FIM < INÍCIO NA AVALIAÇÃO");
         System.out.println("=============================================\n");
 
-        // ---------------------------------------------------------
-        // TESTE 1: Cadastrar um Edital Válido
-        // ---------------------------------------------------------
-        System.out.println("--- TESTE 1: Cadastro de Edital Válido ---");
-        Edital novoEdital = new Edital();
-        novoEdital.setTitulo("Edital de Pesquisa PROEXT 2026");
-        novoEdital.setData("2026-06-12"); // Data de início do edital
-        novoEdital.setFimSubmissao("2026-07-12"); // Fim da submissão (Posterior ao início)
-        novoEdital.setInicioAvaliacao("2026-07-15");
-        novoEdital.setFimAvaliacao("2026-08-15");
+        // 1. Criar e cadastrar o edital base (Avaliação começa nula)
+        Edital edital = new Edital();
+        edital.setTitulo("Edital de Extensão IFPE 2026");
+        edital.setData("2026-06-15");
+        edital.setFimSubmissao("2026-07-15");
+        EditalController.cadastrarEdital(edital);
 
-        EditalController.cadastrarEdital(novoEdital);
-        System.out.println("✅ Edital cadastrado com sucesso!");
-
-        // ---------------------------------------------------------
-        // TESTE 2: Listar e verificar a regra da mesma data inicial
-        // ---------------------------------------------------------
-        System.out.println("\n--- TESTE 2: Listagem e Validação de Datas ---");
+        // 2. Buscar o edital do banco simulado para a primeira edição
         List<Edital> lista = EditalController.listarEditais();
+        Edital editalDoBanco = lista.get(0);
 
-        if (!lista.isEmpty()) {
-            Edital cadastrado = lista.get(0);
-            System.out.println("📋 Edital Gerado -> Número: " + cadastrado.getNumero() + " | Título: " + cadastrado.getTitulo());
-            System.out.println("📅 Data de Início do Edital: " + cadastrado.getData());
-            System.out.println("📥 Início da Submissão (Deve ser igual): " + cadastrado.getInicioSubmissao());
-            System.out.println("📤 Fim da Submissão: " + cadastrado.getFimSubmissao());
-        }
+        // 3. Definir um período inicial correto para a avaliação
+        System.out.println("📅 Definindo período inicial correto: Início em 01/08 e Fim em 15/08...");
+        editalDoBanco.setInicioAvaliacao("2026-08-01");
+        editalDoBanco.setFimAvaliacao("2026-08-15");
+        EditalController.editarEdital(editalDoBanco);
+        System.out.println("✅ Período inicial salvo com sucesso.");
 
-        // ---------------------------------------------------------
-        // TESTE 3: Editar o Edital com sucesso
-        // ---------------------------------------------------------
-        System.out.println("\n--- TESTE 3: Edição de Edital Valida ---");
-        if (!lista.isEmpty()) {
-            Edital editalParaEditar = lista.get(0);
-            editalParaEditar.setTitulo("Edital de Pesquisa PROEXT 2026 - ATUALIZADO");
-            editalParaEditar.setFimSubmissao("2026-07-20"); // Alterando a data de fim
+        // -----------------------------------------------------------------
+        // 🚨 O CENÁRIO DO TEU TESTE: Mudar o Fim para antes do Início
+        // -----------------------------------------------------------------
+        System.out.println("\n🔥 Executando o Teu Teste: Alterando data de Fim para ANTERIOR ao Início...");
 
-            EditalController.editarEdital(editalParaEditar);
+        // Mantemos o início fixo (2026-08-01) e tentamos mudar o fim para Julho (2026-07-25)
+        editalDoBanco.setFimAvaliacao("2026-07-25");
 
-            // Buscar novamente para conferir se alterou
-            Edital editalAlterado = EditalController.listarEditais().get(0);
-            System.out.println("✅ Edital Editado -> Novo Título: " + editalAlterado.getTitulo());
-            System.out.println("✅ Novo Fim de Submissão: " + editalAlterado.getFimSubmissao());
-        }
-
-        // ---------------------------------------------------------
-        // TESTE 4: Tentar Editar com uma Data Inválida (Lançar Exceção)
-        // ---------------------------------------------------------
-        System.out.println("\n--- TESTE 4: Tentativa de Edição com Data Inválida ---");
-        if (!lista.isEmpty()) {
-            Edital editalInvalido = lista.get(0);
-
-            // Forçando o erro: Fim da submissão ANTES do início (Início é 2026-06-12)
-            editalInvalido.setFimSubmissao("2026-05-01");
-
-            System.out.println("⚠️ Tentando salvar data de fim (2026-05-01) anterior ao início...");
-
-            try {
-                EditalController.editarEdital(editalInvalido);
-                System.out.println("❌ ERRO: O sistema aceitou uma data inválida!");
-            } catch (Exception e) {
-                System.out.println("✅ SUCESSO NO BLOQUEIO: O sistema impediu a alteração!");
-                System.out.println("💡 Mensagem do Erro: " + e.getClass().getSimpleName());
-            }
+        try {
+            EditalController.editarEdital(editalDoBanco);
+            System.out.println("❌ ERRO: O sistema aceitou salvar o Fim da avaliação anterior ao Início!");
+        } catch (Exception e) {
+            System.out.println("✅ SUCESSO NO BLOQUEIO: O sistema impediu a gravação de datas inválidas!");
+            System.out.println("💡 Exceção capturada: " + e.getClass().getSimpleName());
         }
 
         System.out.println("\n=============================================");
-        System.out.println("🏁 FIM DOS TESTES");
+        System.out.println("🏁 FIM DO TESTE ESPECÍFICO");
         System.out.println("=============================================");
     }
 }
