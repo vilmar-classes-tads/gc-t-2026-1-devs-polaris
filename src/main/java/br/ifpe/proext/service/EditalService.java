@@ -1,8 +1,10 @@
 package br.ifpe.proext.service;
 
 
+import br.ifpe.proext.enums.Perfil;
 import br.ifpe.proext.exception.PeriodoAvaliacaoInvalidoException;
 import br.ifpe.proext.model.Edital;
+import br.ifpe.proext.model.Servidor;
 import br.ifpe.proext.repository.EditalRepository;
 import br.ifpe.proext.exception.PeriodoSubmissaoInvalidoException;
 import java.util.List;
@@ -59,10 +61,18 @@ public class EditalService {
         }
     }
 
-    public static void cadastrarEdital(Edital edital){
+    private static void validarPermissaoAdministrador(Servidor servidor) {
+        if (servidor == null || servidor.getPerfis() == null || !servidor.getPerfis().contains(Perfil.ADMINISTRADOR)) {
+            throw new RuntimeException("Acesso negado: Apenas usuários com perfil administrativo podem gerenciar editais.");
+        }
+    }
+
+    public static void cadastrarEdital(Edital edital, Servidor servidor){
 
 //        validarTitulo(edital.getTitulo());
 //        validarNumero(edital.getNumero());
+
+        validarPermissaoAdministrador(servidor);
 
         definirNovoEdital(edital);
 
@@ -72,7 +82,9 @@ public class EditalService {
         EditalRepository.criarEdital(edital);
     }
 
-        public static void editarEdital(Edital editalAtualizado) {
+        public static void editarEdital(Edital editalAtualizado, Servidor servidor) {
+
+            validarPermissaoAdministrador(servidor);
 
             Edital editalExistente =
                     EditalRepository.buscarPorNumero(
@@ -101,7 +113,9 @@ public class EditalService {
 
             EditalRepository.atualizarEdital(editalAtualizado);
         }
-    public static List<Edital> listarEditais() {
+    public static List<Edital> listarEditais( Servidor servidor) {
+
+        validarPermissaoAdministrador(servidor);
 
         return EditalRepository.listarTodos();
 

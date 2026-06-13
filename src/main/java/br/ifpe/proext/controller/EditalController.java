@@ -11,23 +11,24 @@ public class EditalController {
 
     private EditalController(){}
 
-    public static void cadastrarEdital(Edital edital){
+    public static void cadastrarEdital(Edital edital, Servidor usuarioLogado){
 
         try {
-            EditalService.cadastrarEdital(edital);
+            EditalService.cadastrarEdital(edital, usuarioLogado);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
+            throw e; // Repassa para o teste capturar
         }
     }
 
-    public static void editarEdital(Edital edital) {
+    public static void editarEdital(Edital edital, Servidor usuarioLogado) {
 
-        EditalService.editarEdital(edital);
+        EditalService.editarEdital(edital, usuarioLogado);
 
     }
-    public static List<Edital> listarEditais() {
+    public static List<Edital> listarEditais(Servidor usuarioLogado) {
 
-        return EditalService.listarEditais();
+        return EditalService.listarEditais(usuarioLogado);
 
     }
 }
