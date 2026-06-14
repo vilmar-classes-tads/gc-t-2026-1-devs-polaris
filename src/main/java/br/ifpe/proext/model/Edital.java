@@ -1,14 +1,22 @@
 package br.ifpe.proext.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Edital {
 
+    private static final String FORMATO_DATA = "dd/MM/yyyy";
     private String titulo;
-    private String numero;
-    private String data;
-    private String inicioSumbissao;
-    private String fimSumbissao;
-    private String inicioAvaliacao;
-    private String fimAvaliacao;
+    private int numero;
+    private int ano;
+    private long data;
+    private long inicioSubmissao;
+    private long fimSubmissao;
+    private long inicioAvaliacao;
+    private long fimAvaliacao;
+
+    public Edital() {}
 
     public String getTitulo() {
         return titulo;
@@ -18,55 +26,115 @@ public class Edital {
         this.titulo = titulo;
     }
 
-    public String getNumero() {
+    public int getNumero() {
         return numero;
     }
 
-    public void setNumero(String numero) {
-        this.numero = numero;
+    public int getAno() {
+        return ano;
     }
 
-    public String getData() {
+    public void setAno(int ano) {
+        this.ano = ano;
+    }
+
+    public long getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(long data) {
         this.data = data;
     }
-
-    public String getInicioSumbissao() {
-        return inicioSumbissao;
+    public long getInicioSubmissao() {
+        return inicioSubmissao;
     }
 
-    public void setInicioSumbissao(String inicioSumbissao) {
-        this.inicioSumbissao = inicioSumbissao;
+    public void setInicioSubmissao(long inicioSubmissao) {
+        this.inicioSubmissao = inicioSubmissao;
     }
 
-    public String getFimSumbissao() {
-        return fimSumbissao;
+    public void setInicioSubmissao(String data)
+            throws ParseException {
+
+        this.inicioSubmissao =
+                new SimpleDateFormat(FORMATO_DATA)
+                        .parse(data)
+                        .getTime();
     }
 
-    public void setFimSumbissao(String fimSumbissao) {
-        this.fimSumbissao = fimSumbissao;
+    public String getInicioSubmissaoString() {
+
+        return new SimpleDateFormat(FORMATO_DATA)
+                .format(new Date(this.inicioSubmissao));
+    }
+    public long getFimSubmissao() {
+        return fimSubmissao;
     }
 
-    public String getInicioAvaliacao() {
+    public void setFimSubmissao(long fimSubmissao) {
+        this.fimSubmissao = fimSubmissao;
+    }
+
+    public void setFimSubmissao(String data)
+            throws ParseException {
+
+        this.fimSubmissao =
+                new SimpleDateFormat(FORMATO_DATA)
+                        .parse(data)
+                        .getTime();
+    }
+
+    public String getFimSubmissaoString() {
+
+        return new SimpleDateFormat(FORMATO_DATA)
+                .format(new Date(this.fimSubmissao));
+    }
+    public long getInicioAvaliacao() {
         return inicioAvaliacao;
     }
 
-    public void setInicioAvaliacao(String inicioAvaliacao) {
+    public void setInicioAvaliacao(long inicioAvaliacao) {
         this.inicioAvaliacao = inicioAvaliacao;
     }
 
-    public String getFimAvaliacao() {
+    public void setInicioAvaliacao(String data)
+            throws ParseException {
+
+        this.inicioAvaliacao =
+                new SimpleDateFormat(FORMATO_DATA)
+                        .parse(data)
+                        .getTime();
+    }
+
+    public String getInicioAvaliacaoString() {
+
+        return new SimpleDateFormat(FORMATO_DATA)
+                .format(new Date(this.inicioAvaliacao));
+    }
+
+    public long getFimAvaliacao() {
         return fimAvaliacao;
     }
 
-    public void setFimAvaliacao(String fimAvaliacao) {
+    public void setFimAvaliacao(long fimAvaliacao) {
         this.fimAvaliacao = fimAvaliacao;
     }
 
-    public Edital() {
+    public void setFimAvaliacao(String data)
+            throws ParseException {
+
+        this.fimAvaliacao =
+                new SimpleDateFormat(FORMATO_DATA)
+                        .parse(data)
+                        .getTime();
     }
 
+    public String getFimAvaliacaoString() {
+
+        return new SimpleDateFormat(FORMATO_DATA)
+                .format(new Date(this.fimAvaliacao));
+    }
+    public String getNumeroFormatado() {
+        return String.format("%02d/%d", numero, ano);
+    }
 }
