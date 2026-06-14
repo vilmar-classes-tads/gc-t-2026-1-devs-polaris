@@ -9,14 +9,31 @@ import java.time.LocalDate;
 
 public class EditalService {
 
+    public static int gerarProximoNumero(int ano) {
+
+        int maiorNumero = 0;
+
+        for (Edital edital : EditalRepository.listarPorAno(ano)) {
+
+            if (edital.getNumero() > maiorNumero) {
+                maiorNumero = edital.getNumero();
+            }
+        }
+
+        return maiorNumero + 1;
+    }
 
     private static void definirNovoEdital(Edital edital) {
 
-        edital.setNumero(
-                EditalRepository.gerarNumeroEdital());
+        int anoAtual = LocalDate.now().getYear();
 
-        edital.setInicioSumbissao(LocalDate.now().toString());
-        edital.setData(LocalDate.now().toString());
+        edital.setAno(anoAtual);
+        edital.setData(System.currentTimeMillis());
+
+        int proximoNumero = gerarProximoNumero(anoAtual);
+
+        edital.definirNumero(proximoNumero);
+
     }
 
     public static void cadastrarEdital(Edital edital){
@@ -32,7 +49,7 @@ public class EditalService {
     public static void editarEdital(Edital editalAtualizado) {
 
         Edital editalExistente =
-                EditalRepository.buscarPorNumero(editalAtualizado.getNumero());
+                EditalRepository.buscarPorNumeroEAno(editalAtualizado.getNumero(),editalAtualizado.getAno());
 
         if (editalExistente == null) {
             throw new RuntimeException("Edital não encontrado.");
