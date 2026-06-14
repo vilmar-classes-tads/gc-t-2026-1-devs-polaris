@@ -1,42 +1,48 @@
 package br.ifpe.proext.service;
 
 
+import br.ifpe.proext.exception.PeriodoSubmissaoInvalidoException;
 import br.ifpe.proext.model.Edital;
 import br.ifpe.proext.repository.EditalRepository;
-import br.ifpe.proext.exception.PeriodoSubmissaoInvalidoException;
+
 import java.util.List;
 import java.time.LocalDate;
 
 
 public class EditalService {
 
+    public static int gerarProximoNumero(int ano) {
+
+        int maiorNumero = 0;
+
+        for (Edital edital : EditalRepository.listarPorAno(ano)) {
+
+            if (edital.getNumero() > maiorNumero) {
+                maiorNumero = edital.getNumero();
+            }
+        }
+
+        return maiorNumero + 1;
+    }
+
+    private static void validarPeriodoSubmissao(Edital edital) {
+
+        if (edital.getInicioSubmissao() > edital.getFimSubmissao()) {
+            throw new PeriodoSubmissaoInvalidoException();
+        }
+    }
 
     private static void definirNovoEdital(Edital edital) {
 
-        edital.setNumero(
-                EditalRepository.gerarNumeroEdital());
+        int anoAtual = LocalDate.now().getYear();
 
-        edital.setInicioSubmissao(LocalDate.now().toString());
-        edital.setData(LocalDate.now().toString());
-    }
+        edital.setAno(anoAtual);
+        edital.setData(System.currentTimeMillis());
 
-    private static void validarPeriodoSubmissao(Edital editalExistente, Edital editalAtualizado) {
+        int proximoNumero = gerarProximoNumero(anoAtual);
 
-        if (editalAtualizado.getFimSubmissao() == null) {
-            return;
-        }
+        edital.definirNumero(proximoNumero);
 
-        LocalDate inicio =
-                LocalDate.parse(
-                        editalExistente.getInicioSubmissao());
-
-        LocalDate fim =
-                LocalDate.parse(
-                        editalAtualizado.getFimSubmissao());
-
-        if (inicio.isAfter(fim)) {
-            throw new PeriodoSubmissaoInvalidoException();
-        }
     }
 
     public static void cadastrarEdital(Edital edital){
@@ -44,27 +50,28 @@ public class EditalService {
 //        validarTitulo(edital.getTitulo());
 //        validarNumero(edital.getNumero());
 
+        validarPeriodoSubmissao(edital);
         definirNovoEdital(edital);
 
         EditalRepository.criarEdital(edital);
     }
 
-        public static void editarEdital(Edital editalAtualizado) {
+    public static void editarEdital(Edital editalAtualizado) {
 
-            Edital editalExistente =
-                    EditalRepository.buscarPorNumero(
-                            editalAtualizado.getNumero());
+        validarPeriodoSubmissao(editalAtualizado);
 
-            if (editalExistente == null) {
-                throw new RuntimeException("Edital não encontrado.");
-            }
+        Edital editalExistente =
+                EditalRepository.buscarPorNumeroEAno(
+                        editalAtualizado.getNumero(),
+                        editalAtualizado.getAno());
 
-            validarPeriodoSubmissao(
-                    editalExistente,
-                    editalAtualizado);
-
-            EditalRepository.atualizarEdital(editalAtualizado);
+        if (editalExistente == null) {
+            throw new RuntimeException("Edital não encontrado.");
         }
+
+        EditalRepository.atualizarEdital(editalAtualizado);
+    }
+
     public static List<Edital> listarEditais() {
 
         return EditalRepository.listarTodos();
@@ -72,4 +79,3 @@ public class EditalService {
     }
 
     }
-
