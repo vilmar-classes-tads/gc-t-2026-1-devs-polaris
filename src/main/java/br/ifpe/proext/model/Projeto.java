@@ -1,7 +1,10 @@
 package br.ifpe.proext.model;
 
+import br.ifpe.proext.enums.ODS;
 import br.ifpe.proext.enums.StatusProjeto;
 import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.Set;
 
 public class Projeto {
     private String titulo;
@@ -11,6 +14,7 @@ public class Projeto {
     private String areaTematica;
     private String campus;
     private StatusProjeto status;
+    private Set<ODS> ods = new LinkedHashSet<>();
 
     public Projeto(){};
 
@@ -68,5 +72,13 @@ public class Projeto {
 
     public void setStatus(StatusProjeto status) {
         this.status = status;
+    }
+
+    public Set<ODS> getOds() {
+        return ods;
+    }
+
+    public void setOds(Set<ODS> ods) {
+        this.ods = (ods == null) ? new LinkedHashSet<>() : new LinkedHashSet<>(ods);
     }
 }

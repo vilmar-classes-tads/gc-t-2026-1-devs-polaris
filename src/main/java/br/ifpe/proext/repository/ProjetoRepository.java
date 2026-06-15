@@ -30,6 +30,7 @@ public class ProjetoRepository {
                 projetoAux.setPublicoAlvo(projeto.getPublicoAlvo());
                 projetoAux.setAreaTematica(projeto.getAreaTematica());
                 projetoAux.setCampus(projeto.getCampus());
+                projetoAux.setOds(projeto.getOds());
                 break;
             }
         }
