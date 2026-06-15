@@ -1,0 +1,7 @@
+Avaliação 1:
+
+1 - as pastas target e .idea precisam estar no gitignore.
+2 - Precisa ter uma "protection rules" para a main.
+3 - Não achei o changelog.md.
+4 - Não foi criado tag nenhuma de entrega, a branch main tá vazia. 
+5 - Não identifiquei a integração com o Docker.
