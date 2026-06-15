@@ -2,6 +2,11 @@ package br.ifpe.proext.service;
 
 import br.ifpe.proext.enums.Perfil;
 import br.ifpe.proext.enums.StatusProjeto;
+import br.ifpe.proext.exception.ProjetoBloqueadoParaEdicaoException;
+import br.ifpe.proext.exception.ProjetoJaSubmetidoException;
+import br.ifpe.proext.exception.ProjetoNaoEncontradoException;
+import br.ifpe.proext.exception.TermoNaoAceitoException;
+import br.ifpe.proext.exception.UsuarioSemPermissaoException;
 import br.ifpe.proext.model.Projeto;
 import br.ifpe.proext.model.Servidor;
 import br.ifpe.proext.repository.ProjetoRepository;
@@ -28,11 +33,7 @@ public class ProjetoService {
     }
 
     public static void registrarAceiteTermo(Projeto projeto, Servidor coordenador) {
-        Projeto projetoExistente = ProjetoRepository.buscarPorTitulo(projeto.getTitulo());
-
-        if (projetoExistente == null) {
-            throw new IllegalStateException("Projeto não encontrado.");
-        }
+        Projeto projetoExistente = buscarProjetoExistentePorTitulo(projeto.getTitulo());
 
         validarCoordenador(coordenador);
 
@@ -111,13 +112,13 @@ public class ProjetoService {
 
     private static void validarPermissaoCoordenador(Servidor usuario) {
         if (usuario == null || usuario.getPerfis() == null || !usuario.getPerfis().contains(Perfil.COORDENADOR)) {
-            throw new IllegalStateException("Acesso negado: apenas coordenadores podem realizar esta operação.");
+            throw new UsuarioSemPermissaoException();
         }
     }
 
     private static void validarCoordenador(Servidor coordenador) {
         if (coordenador == null || coordenador.getPerfis() == null || !coordenador.getPerfis().contains(Perfil.COORDENADOR)) {
-            throw new IllegalStateException("Somente um coordenador pode registrar o aceite do termo.");
+            throw new UsuarioSemPermissaoException();
         }
     }
 
@@ -126,7 +127,11 @@ public class ProjetoService {
         validarOdsSelecionadas(projeto);
 
         if (!projeto.isTermoAceito()) {
-            throw new IllegalStateException("O projeto só pode ser submetido após o aceite do termo pelo coordenador.");
+            throw new TermoNaoAceitoException();
+        }
+
+        if (projeto.getStatus() == StatusProjeto.SUBMETIDO) {
+            throw new ProjetoJaSubmetidoException();
         }
 
         if (projeto.getStatus() != StatusProjeto.RASCUNHO) {
@@ -137,14 +142,14 @@ public class ProjetoService {
     private static Projeto buscarProjetoExistentePorTitulo(String titulo) {
         Projeto projetoExistente = ProjetoRepository.buscarPorTitulo(titulo);
         if (projetoExistente == null) {
-            throw new IllegalStateException("Projeto não encontrado.");
+            throw new ProjetoNaoEncontradoException();
         }
         return projetoExistente;
     }
 
     private static void validarProjetoEditavel(Projeto projeto) {
         if (projeto.getStatus() != StatusProjeto.RASCUNHO && projeto.getStatus() != StatusProjeto.CORRECAO) {
-            throw new IllegalStateException("A edição é permitida apenas para projetos em RASCUNHO ou CORRECAO.");
+            throw new ProjetoBloqueadoParaEdicaoException();
         }
     }
 }
