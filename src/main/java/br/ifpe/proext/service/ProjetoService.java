@@ -10,13 +10,15 @@ import java.util.ArrayList;
 public class ProjetoService {
     private ProjetoService(){}
     
-    public static void cadastrarProjeto(Projeto projeto){
+    public static void cadastrarProjeto(Servidor usuario, Projeto projeto){
+        validarPermissaoCoordenador(usuario);
         validarPreenchimentoObrigatorio(projeto);
         validarOdsSelecionadas(projeto);
         ProjetoRepository.criarProjeto(projeto);
     }
 
-    public static void atualizarProjeto(Projeto projeto) {
+    public static void atualizarProjeto(Servidor usuario, Projeto projeto) {
+        validarPermissaoCoordenador(usuario);
         validarPreenchimentoObrigatorio(projeto);
         validarOdsSelecionadas(projeto);
         Projeto projetoExistente = buscarProjetoExistentePorTitulo(projeto.getTitulo());
@@ -43,7 +45,8 @@ public class ProjetoService {
         ProjetoRepository.atualizarProjeto(projetoExistente);
     }
 
-    public static void submeterProjeto(Projeto projeto) {
+    public static void submeterProjeto(Servidor usuario, Projeto projeto) {
+        validarPermissaoCoordenador(usuario);
         Projeto projetoExistente = buscarProjetoExistentePorTitulo(projeto.getTitulo());
 
         validarProjetoParaSubmissao(projetoExistente);
@@ -104,6 +107,12 @@ public class ProjetoService {
 
     private static boolean estaEmBranco(String valor) {
         return valor == null || valor.trim().isEmpty();
+    }
+
+    private static void validarPermissaoCoordenador(Servidor usuario) {
+        if (usuario == null || usuario.getPerfis() == null || !usuario.getPerfis().contains(Perfil.COORDENADOR)) {
+            throw new IllegalStateException("Acesso negado: apenas coordenadores podem realizar esta operação.");
+        }
     }
 
     private static void validarCoordenador(Servidor coordenador) {
