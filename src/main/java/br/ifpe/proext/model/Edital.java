@@ -1,5 +1,6 @@
 package br.ifpe.proext.model;
 
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,6 +29,9 @@ public class Edital {
 
     public int getNumero() {
         return numero;
+    }
+    public void definirNumero(int numero) {
+        this.numero = numero;
     }
 
     public int getAno() {

@@ -7,6 +7,7 @@ import br.ifpe.proext.model.Edital;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class EditalRepository {
 
     private static final List<Edital> editais = new ArrayList<>();
@@ -16,7 +17,6 @@ public class EditalRepository {
     public static void criarEdital(Edital edital){
         editais.add(edital);
     }
-
 
     public static List<Edital> buscarPorTitulo(String titulo) {
 
