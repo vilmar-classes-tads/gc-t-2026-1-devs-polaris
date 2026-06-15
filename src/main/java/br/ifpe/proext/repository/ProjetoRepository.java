@@ -31,6 +31,9 @@ public class ProjetoRepository {
                 projetoAux.setAreaTematica(projeto.getAreaTematica());
                 projetoAux.setCampus(projeto.getCampus());
                 projetoAux.setOds(projeto.getOds());
+                projetoAux.setStatus(projeto.getStatus());
+                projetoAux.setTermoAceito(projeto.isTermoAceito());
+                projetoAux.setCoordenadorAceite(projeto.getCoordenadorAceite());
                 break;
             }
         }

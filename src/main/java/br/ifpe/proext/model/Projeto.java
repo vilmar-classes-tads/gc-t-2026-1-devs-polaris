@@ -13,8 +13,10 @@ public class Projeto {
     private String publicoAlvo;
     private String areaTematica;
     private String campus;
-    private StatusProjeto status;
+    private StatusProjeto status = StatusProjeto.RASCUNHO;
     private Set<ODS> ods = new LinkedHashSet<>();
+    private boolean termoAceito;
+    private Servidor coordenadorAceite;
 
     public Projeto(){};
 
@@ -80,5 +82,21 @@ public class Projeto {
 
     public void setOds(Set<ODS> ods) {
         this.ods = (ods == null) ? new LinkedHashSet<>() : new LinkedHashSet<>(ods);
+    }
+
+    public boolean isTermoAceito() {
+        return termoAceito;
+    }
+
+    public void setTermoAceito(boolean termoAceito) {
+        this.termoAceito = termoAceito;
+    }
+
+    public Servidor getCoordenadorAceite() {
+        return coordenadorAceite;
+    }
+
+    public void setCoordenadorAceite(Servidor coordenadorAceite) {
+        this.coordenadorAceite = coordenadorAceite;
     }
 }
