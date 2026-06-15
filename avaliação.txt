@@ -5,3 +5,6 @@ Avaliação 1:
 3 - Não achei o changelog.md.
 4 - Não foi criado tag nenhuma de entrega, a branch main tá vazia. 
 5 - Não identifiquei a integração com o Docker.
+
+
+cada problema desse precisa ser corrigido via Issue.
