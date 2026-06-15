@@ -11,11 +11,13 @@ public class ProjetoService {
     private ProjetoService(){}
     
     public static void cadastrarProjeto(Projeto projeto){
+        validarPreenchimentoObrigatorio(projeto);
         validarOdsSelecionadas(projeto);
         ProjetoRepository.criarProjeto(projeto);
     }
 
     public static void atualizarProjeto(Projeto projeto) {
+        validarPreenchimentoObrigatorio(projeto);
         validarOdsSelecionadas(projeto);
         Projeto projetoExistente = ProjetoRepository.buscarPorTitulo(projeto.getTitulo());
         
@@ -55,13 +57,7 @@ public class ProjetoService {
             throw new IllegalStateException("Projeto não encontrado.");
         }
 
-        if (!projetoExistente.isTermoAceito()) {
-            throw new IllegalStateException("O projeto só pode ser submetido após o aceite do termo pelo coordenador.");
-        }
-
-        if (projetoExistente.getStatus() != StatusProjeto.RASCUNHO) {
-            throw new IllegalStateException("Somente projetos em status RASCUNHO podem ser submetidos.");
-        }
+        validarProjetoParaSubmissao(projetoExistente);
 
         projetoExistente.setStatus(StatusProjeto.SUBMETIDO);
         ProjetoRepository.atualizarProjeto(projetoExistente);
@@ -77,9 +73,56 @@ public class ProjetoService {
         }
     }
 
+    private static void validarPreenchimentoObrigatorio(Projeto projeto) {
+        if (projeto == null) {
+            throw new IllegalStateException("Projeto inválido.");
+        }
+
+        if (estaEmBranco(projeto.getTitulo())) {
+            throw new IllegalStateException("O título do projeto é obrigatório.");
+        }
+
+        if (estaEmBranco(projeto.getResumo())) {
+            throw new IllegalStateException("O resumo do projeto é obrigatório.");
+        }
+
+        if (projeto.getPalavrasChave() == null || projeto.getPalavrasChave().isEmpty()) {
+            throw new IllegalStateException("O projeto deve possuir ao menos uma palavra-chave.");
+        }
+
+        if (estaEmBranco(projeto.getPublicoAlvo())) {
+            throw new IllegalStateException("O público-alvo do projeto é obrigatório.");
+        }
+
+        if (estaEmBranco(projeto.getAreaTematica())) {
+            throw new IllegalStateException("A área temática do projeto é obrigatória.");
+        }
+
+        if (estaEmBranco(projeto.getCampus())) {
+            throw new IllegalStateException("O campus do projeto é obrigatório.");
+        }
+    }
+
+    private static boolean estaEmBranco(String valor) {
+        return valor == null || valor.trim().isEmpty();
+    }
+
     private static void validarCoordenador(Servidor coordenador) {
         if (coordenador == null || coordenador.getPerfis() == null || !coordenador.getPerfis().contains(Perfil.COORDENADOR)) {
             throw new IllegalStateException("Somente um coordenador pode registrar o aceite do termo.");
+        }
+    }
+
+    private static void validarProjetoParaSubmissao(Projeto projeto) {
+        validarPreenchimentoObrigatorio(projeto);
+        validarOdsSelecionadas(projeto);
+
+        if (!projeto.isTermoAceito()) {
+            throw new IllegalStateException("O projeto só pode ser submetido após o aceite do termo pelo coordenador.");
+        }
+
+        if (projeto.getStatus() != StatusProjeto.RASCUNHO) {
+            throw new IllegalStateException("Somente projetos em status RASCUNHO podem ser submetidos.");
         }
     }
 }
