@@ -40,6 +40,6 @@ public class ProjetoRepository {
     }
 
         public static ArrayList<Projeto> listarProjetos() {
-            return projetos;
+            return new ArrayList<>(projetos);
         }
 }

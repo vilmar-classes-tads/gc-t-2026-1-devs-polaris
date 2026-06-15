@@ -45,4 +45,20 @@ public class ProjetoController {
             throw new RuntimeException(e);
         }
     }
+
+    public static Projeto visualizarProjeto(String titulo){
+        try {
+            return ProjetoService.buscarProjetoParaVisualizacao(titulo);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static Projeto buscarProjetoParaEdicao(String titulo){
+        try {
+            return ProjetoService.buscarProjetoParaEdicao(titulo);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
