@@ -20,8 +20,11 @@ public class EditalController {
 
     public static void editarEdital(Edital edital) {
 
-        EditalService.editarEdital(edital);
-
+        try {
+            EditalService.editarEdital(edital);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
     }
     public static List<Edital> listarEditais() {
 

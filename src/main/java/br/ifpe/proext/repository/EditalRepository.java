@@ -23,7 +23,7 @@ public class EditalRepository {
         List<Edital> resultado = new ArrayList<>();
 
         for (Edital edital : editais) {
-            if (edital.getTitulo().trim().toLowerCase().equals((titulo).trim().toLowerCase())) {
+            if (edital.getTitulo().trim().toLowerCase().equals(titulo.trim().toLowerCase())) {
                 resultado.add(edital);
             }
         }

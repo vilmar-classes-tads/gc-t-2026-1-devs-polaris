@@ -1,6 +1,8 @@
 package br.ifpe.proext.service;
 
 
+import br.ifpe.proext.exception.EditalNaoEncontradoException;
+import br.ifpe.proext.exception.PeriodoAvaliacaoInvalidoException;
 import br.ifpe.proext.exception.PeriodoSubmissaoInvalidoException;
 import br.ifpe.proext.model.Edital;
 import br.ifpe.proext.repository.EditalRepository;
@@ -9,6 +11,8 @@ import java.time.LocalDate;
 
 
 public class EditalService {
+
+    private EditalService() {}
 
     public static int gerarProximoNumero(int ano) {
 
@@ -26,8 +30,40 @@ public class EditalService {
 
     private static void validarPeriodoSubmissao(Edital edital) {
 
+        if (edital.getInicioSubmissao() == 0) {
+            throw new IllegalArgumentException("Início da submissão é obrigatório.");
+        }
+
+        if (edital.getFimSubmissao() == 0) {
+            throw new IllegalArgumentException("Fim da submissão é obrigatório.");
+        }
+
         if (edital.getInicioSubmissao() > edital.getFimSubmissao()) {
             throw new PeriodoSubmissaoInvalidoException();
+        }
+    }
+
+    private static void validarPeriodoAvaliacao(Edital edital) {
+
+        if (edital.getInicioAvaliacao() == 0) {
+            throw new IllegalArgumentException("Início da avaliação é obrigatório.");
+        }
+
+        if (edital.getFimAvaliacao() == 0) {
+            throw new IllegalArgumentException("Fim da avaliação é obrigatório.");
+        }
+
+        if (edital.getInicioAvaliacao() > edital.getFimAvaliacao()) {
+            throw new PeriodoAvaliacaoInvalidoException(
+                    "O início da avaliação deve ser anterior ao fim da avaliação.");
+        }
+    }
+
+    private static void validarConsistenciaTemporalSubmissaoAvaliacao(Edital edital) {
+
+        if (edital.getInicioAvaliacao() < edital.getFimSubmissao()) {
+            throw new PeriodoAvaliacaoInvalidoException(
+                    "A avaliação não pode iniciar antes do término da submissão.");
         }
     }
 
@@ -36,20 +72,19 @@ public class EditalService {
         int anoAtual = LocalDate.now().getYear();
 
         edital.setAno(anoAtual);
-        edital.setData(System.currentTimeMillis());
+        edital.setDataCriacao(System.currentTimeMillis());
 
         int proximoNumero = gerarProximoNumero(anoAtual);
 
-        edital.definirNumero(proximoNumero);
+        edital.setNumero(proximoNumero);
 
     }
 
     public static void cadastrarEdital(Edital edital){
 
-//        validarTitulo(edital.getTitulo());
-//        validarNumero(edital.getNumero());
-
         validarPeriodoSubmissao(edital);
+        validarPeriodoAvaliacao(edital);
+        validarConsistenciaTemporalSubmissaoAvaliacao(edital);
         definirNovoEdital(edital);
 
         EditalRepository.criarEdital(edital);
@@ -65,7 +100,7 @@ public class EditalService {
                         editalAtualizado.getAno());
 
         if (editalExistente == null) {
-            throw new RuntimeException("Edital não encontrado.");
+            throw new EditalNaoEncontradoException();
         }
 
         EditalRepository.atualizarEdital(editalAtualizado);
