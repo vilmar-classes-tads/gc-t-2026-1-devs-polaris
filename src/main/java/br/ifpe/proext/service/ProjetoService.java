@@ -4,6 +4,7 @@ import br.ifpe.proext.enums.StatusProjeto;
 import br.ifpe.proext.model.Projeto;
 import br.ifpe.proext.repository.ProjetoRepository;
 import br.ifpe.proext.repository.ServidorRepository;
+import java.util.ArrayList;
 
 public class ProjetoService {
     private ProjetoService(){}
@@ -24,5 +25,9 @@ public class ProjetoService {
         }
 
         ProjetoRepository.atualizarProjeto(projeto);
+    }
+
+    public static ArrayList<Projeto> listarProjetos() {
+        return ProjetoRepository.listarProjetos();
     }
 }
