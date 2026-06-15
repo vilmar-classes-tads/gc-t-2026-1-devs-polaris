@@ -1,9 +1,7 @@
 package br.ifpe.proext.controller;
 
 import br.ifpe.proext.model.Edital;
-import br.ifpe.proext.model.Servidor;
 import br.ifpe.proext.service.EditalService;
-import br.ifpe.proext.service.ServidorService;
 
 import java.util.List;
 
