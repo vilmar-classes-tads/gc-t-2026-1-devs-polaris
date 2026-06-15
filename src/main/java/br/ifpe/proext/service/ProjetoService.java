@@ -134,8 +134,8 @@ public class ProjetoService {
     }
 
     private static void validarProjetoEditavel(Projeto projeto) {
-        if (projeto.getStatus() != StatusProjeto.RASCUNHO) {
-            throw new IllegalStateException("Projetos submetidos ou em avaliação não podem ser alterados; apenas visualizados.");
+        if (projeto.getStatus() != StatusProjeto.RASCUNHO && projeto.getStatus() != StatusProjeto.CORRECAO) {
+            throw new IllegalStateException("A edição é permitida apenas para projetos em RASCUNHO ou CORRECAO.");
         }
     }
 }
