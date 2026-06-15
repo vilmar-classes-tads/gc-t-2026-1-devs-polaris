@@ -10,6 +10,8 @@ public class Projeto {
     private String areaTematica;
     private String campus;
 
+    public Projeto(){};
+
     public String getTitulo() {
         return titulo;
     }
