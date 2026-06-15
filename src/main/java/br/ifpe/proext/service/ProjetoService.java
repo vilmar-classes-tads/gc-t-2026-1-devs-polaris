@@ -19,15 +19,8 @@ public class ProjetoService {
     public static void atualizarProjeto(Projeto projeto) {
         validarPreenchimentoObrigatorio(projeto);
         validarOdsSelecionadas(projeto);
-        Projeto projetoExistente = ProjetoRepository.buscarPorTitulo(projeto.getTitulo());
-        
-        if (projetoExistente == null) {
-            throw new IllegalStateException("Projeto não encontrado.");
-        }
-        
-        if (projetoExistente.getStatus() != StatusProjeto.RASCUNHO) {
-            throw new IllegalStateException("O projeto deve estar em status RASCUNHO para ser atualizado.");
-        }
+        Projeto projetoExistente = buscarProjetoExistentePorTitulo(projeto.getTitulo());
+        validarProjetoEditavel(projetoExistente);
 
         ProjetoRepository.atualizarProjeto(projeto);
     }
@@ -51,11 +44,7 @@ public class ProjetoService {
     }
 
     public static void submeterProjeto(Projeto projeto) {
-        Projeto projetoExistente = ProjetoRepository.buscarPorTitulo(projeto.getTitulo());
-
-        if (projetoExistente == null) {
-            throw new IllegalStateException("Projeto não encontrado.");
-        }
+        Projeto projetoExistente = buscarProjetoExistentePorTitulo(projeto.getTitulo());
 
         validarProjetoParaSubmissao(projetoExistente);
 
@@ -65,6 +54,16 @@ public class ProjetoService {
 
     public static ArrayList<Projeto> listarProjetos() {
         return ProjetoRepository.listarProjetos();
+    }
+
+    public static Projeto buscarProjetoParaVisualizacao(String titulo) {
+        return buscarProjetoExistentePorTitulo(titulo);
+    }
+
+    public static Projeto buscarProjetoParaEdicao(String titulo) {
+        Projeto projetoExistente = buscarProjetoExistentePorTitulo(titulo);
+        validarProjetoEditavel(projetoExistente);
+        return projetoExistente;
     }
 
     private static void validarOdsSelecionadas(Projeto projeto) {
@@ -123,6 +122,20 @@ public class ProjetoService {
 
         if (projeto.getStatus() != StatusProjeto.RASCUNHO) {
             throw new IllegalStateException("Somente projetos em status RASCUNHO podem ser submetidos.");
+        }
+    }
+
+    private static Projeto buscarProjetoExistentePorTitulo(String titulo) {
+        Projeto projetoExistente = ProjetoRepository.buscarPorTitulo(titulo);
+        if (projetoExistente == null) {
+            throw new IllegalStateException("Projeto não encontrado.");
+        }
+        return projetoExistente;
+    }
+
+    private static void validarProjetoEditavel(Projeto projeto) {
+        if (projeto.getStatus() != StatusProjeto.RASCUNHO) {
+            throw new IllegalStateException("Projetos submetidos ou em avaliação não podem ser alterados; apenas visualizados.");
         }
     }
 }
