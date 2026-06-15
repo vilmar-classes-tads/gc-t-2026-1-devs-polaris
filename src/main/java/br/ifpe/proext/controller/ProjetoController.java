@@ -11,4 +11,12 @@ public class ProjetoController {
             throw new RuntimeException(e);
         }
     }
+
+    public static void atualizarProjeto(Projeto projeto){
+        try {
+            ProjetoService.atualizarProjeto(projeto);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
 }
