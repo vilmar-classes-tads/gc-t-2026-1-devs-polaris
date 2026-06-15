@@ -4,6 +4,7 @@ package br.ifpe.proext.service;
 import br.ifpe.proext.enums.Perfil;
 import br.ifpe.proext.exception.PeriodoSubmissaoInvalidoException;
 import br.ifpe.proext.exception.PeriodoAvaliacaoInvalidoException;
+import br.ifpe.proext.exception.EditalDuplicadoException;
 import br.ifpe.proext.model.Edital;
 import br.ifpe.proext.model.Servidor;
 import br.ifpe.proext.repository.EditalRepository;
@@ -13,6 +14,17 @@ import java.time.LocalDate;
 
 public class EditalService {
 
+    private static void validarUnicidadeEdital(Edital edital) {
+
+        Edital editalExistente =
+                EditalRepository.buscarPorNumeroEAno(
+                        edital.getNumero(),
+                        edital.getAno());
+
+        if (editalExistente != null) {
+            throw new EditalDuplicadoException();
+        }
+    }
     public static int gerarProximoNumero(int ano) {
 
         int maiorNumero = 0;
@@ -74,6 +86,7 @@ public class EditalService {
         validarPeriodoAvaliacao(edital);
 
         definirNovoEdital(edital);
+        validarUnicidadeEdital(edital);
 
         EditalRepository.criarEdital(edital);
     }
