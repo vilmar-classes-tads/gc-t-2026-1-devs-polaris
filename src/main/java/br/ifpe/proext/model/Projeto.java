@@ -1,5 +1,6 @@
 package br.ifpe.proext.model;
 
+import br.ifpe.proext.enums.StatusProjeto;
 import java.util.ArrayList;
 
 public class Projeto {
@@ -9,6 +10,7 @@ public class Projeto {
     private String publicoAlvo;
     private String areaTematica;
     private String campus;
+    private StatusProjeto status;
 
     public Projeto(){};
 
@@ -58,5 +60,13 @@ public class Projeto {
 
     public void setCampus(String campus) {
         this.campus = campus;
+    }
+
+    public StatusProjeto getStatus() {
+        return status;
+    }
+
+    public void setStatus(StatusProjeto status) {
+        this.status = status;
     }
 }
