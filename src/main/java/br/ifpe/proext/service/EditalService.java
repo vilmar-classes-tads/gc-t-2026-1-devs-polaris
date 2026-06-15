@@ -121,6 +121,8 @@ public class EditalService {
 
         validarPermissaoAdministrador(servidor);
         validarPeriodoSubmissao(editalAtualizado);
+        validarPeriodoAvaliacao(editalAtualizado);
+        validarConsistenciaTemporalSubmissaoAvaliacao(editalAtualizado);
 
         Edital editalExistente =
                 EditalRepository.buscarPorNumeroEAno(
