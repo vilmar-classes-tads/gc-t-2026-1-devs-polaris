@@ -3,7 +3,6 @@ package br.ifpe.proext.controller;
 import br.ifpe.proext.model.Edital;
 import br.ifpe.proext.service.EditalService;
 
-
 import java.util.List;
 
 public class EditalController {

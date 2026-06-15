@@ -7,6 +7,7 @@ import br.ifpe.proext.model.Edital;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class EditalRepository {
 
     private static final List<Edital> editais = new ArrayList<>();

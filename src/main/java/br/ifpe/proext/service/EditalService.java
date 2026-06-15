@@ -4,7 +4,6 @@ package br.ifpe.proext.service;
 import br.ifpe.proext.exception.PeriodoSubmissaoInvalidoException;
 import br.ifpe.proext.model.Edital;
 import br.ifpe.proext.repository.EditalRepository;
-
 import java.util.List;
 import java.time.LocalDate;
 
