@@ -18,7 +18,7 @@ public class Projeto {
     private boolean termoAceito;
     private Servidor coordenadorAceite;
 
-    public Projeto(){};
+    public Projeto(){}
 
     public String getTitulo() {
         return titulo;

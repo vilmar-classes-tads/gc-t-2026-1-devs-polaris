@@ -15,7 +15,7 @@ public class ProjetoRepository {
 
     public static Projeto buscarPorTitulo(String titulo) {
         for (Projeto projeto : projetos) {
-            if (projeto.getTitulo().trim().toLowerCase().equals(titulo.trim().toLowerCase())) {
+            if (projeto.getTitulo().trim().equalsIgnoreCase(titulo.trim())) {
                 return projeto;
             }
         }
@@ -24,7 +24,7 @@ public class ProjetoRepository {
 
     public static void atualizarProjeto(Projeto projeto) {
         for (Projeto projetoAux : projetos) {
-            if (projetoAux.getTitulo().trim().toLowerCase().equals(projeto.getTitulo().trim().toLowerCase())) {
+            if (projetoAux.getTitulo().trim().equalsIgnoreCase(projeto.getTitulo().trim())) {
                 projetoAux.setResumo(projeto.getResumo());
                 projetoAux.setPalavrasChave(projeto.getPalavrasChave());
                 projetoAux.setPublicoAlvo(projeto.getPublicoAlvo());
