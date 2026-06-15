@@ -6,17 +6,17 @@ import br.ifpe.proext.service.ProjetoService;
 import java.util.ArrayList;
 
 public class ProjetoController {
-    public static void cadastrarProjeto(Projeto projeto){
+    public static void cadastrarProjeto(Servidor usuario, Projeto projeto){
         try {
-            ProjetoService.cadastrarProjeto(projeto);
+            ProjetoService.cadastrarProjeto(usuario, projeto);
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
     }
 
-    public static void atualizarProjeto(Projeto projeto){
+    public static void atualizarProjeto(Servidor usuario, Projeto projeto){
         try {
-            ProjetoService.atualizarProjeto(projeto);
+            ProjetoService.atualizarProjeto(usuario, projeto);
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
@@ -30,9 +30,9 @@ public class ProjetoController {
         }
     }
 
-    public static void submeterProjeto(Projeto projeto){
+    public static void submeterProjeto(Servidor usuario, Projeto projeto){
         try {
-            ProjetoService.submeterProjeto(projeto);
+            ProjetoService.submeterProjeto(usuario, projeto);
         } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
