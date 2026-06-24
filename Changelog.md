@@ -2,6 +2,33 @@
 
 Todas as mudanças relevantes deste projeto serão documentadas neste arquivo.
 
+## [v0.2.0] - Segunda Entrega Parcial
+
+### Added
+
+#### Módulo de Projetos (Issue 2)
+
+* Cadastro de projetos.
+* Edição de rascunhos.
+* Listagem de projetos.
+* Seleção de ODS.
+* Termo de compromisso.
+* Submissão de projetos.
+* Bloqueio de edição após submissão.
+* Permissões de correção.
+* Permissões de coordenador.
+* Tratamento de exceções de projeto.
+
+#### Infraestrutura e DevOps
+
+* Dockerfile para execução em containers.
+* Pipeline GitHub Actions com build Docker.
+
+### Notas
+
+* Segunda release do projeto.
+* Entrega correspondente às funcionalidades do módulo de projetos e melhorias de infraestrutura.
+
 ## [v0.1.0] - Primeira Entrega Parcial
 
 ### Added
