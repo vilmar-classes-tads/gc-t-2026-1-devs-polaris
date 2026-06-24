@@ -23,5 +23,7 @@
 hs_err_pid*
 replay_pid*
 
-.idea/
-target/
+# IDE and build directories
+/.idea/
+/target/
+
