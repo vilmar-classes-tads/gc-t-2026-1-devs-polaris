@@ -17,6 +17,7 @@ public class Projeto {
     private Set<ODS> ods = new LinkedHashSet<>();
     private boolean termoAceito;
     private Servidor coordenadorAceite;
+    private ArrayList<Membro> equipe = new ArrayList<>();
 
     public Projeto(){}
 
@@ -98,5 +99,13 @@ public class Projeto {
 
     public void setCoordenadorAceite(Servidor coordenadorAceite) {
         this.coordenadorAceite = coordenadorAceite;
+    }
+
+    public ArrayList<Membro> getEquipe() {
+        return equipe;
+    }
+
+    public void setEquipe(ArrayList<Membro> equipe) {
+        this.equipe = (equipe == null) ? new ArrayList<>() : equipe;
     }
 }
