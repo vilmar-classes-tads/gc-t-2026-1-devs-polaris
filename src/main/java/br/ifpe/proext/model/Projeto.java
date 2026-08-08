@@ -18,6 +18,8 @@ public class Projeto {
     private boolean termoAceito;
     private Servidor coordenadorAceite;
     private ArrayList<Membro> equipe = new ArrayList<>();
+    private Edital edital;
+    private ArrayList<String> anexos = new ArrayList<>();
 
     public Projeto(){}
 
@@ -107,5 +109,21 @@ public class Projeto {
 
     public void setEquipe(ArrayList<Membro> equipe) {
         this.equipe = (equipe == null) ? new ArrayList<>() : equipe;
+    }
+
+    public Edital getEdital() {
+        return edital;
+    }
+
+    public void setEdital(Edital edital) {
+        this.edital = edital;
+    }
+
+    public ArrayList<String> getAnexos() {
+        return anexos;
+    }
+
+    public void setAnexos(ArrayList<String> anexos) {
+        this.anexos = (anexos == null) ? new ArrayList<>() : anexos;
     }
 }
